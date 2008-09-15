@@ -1,0 +1,52 @@
+#
+#   Copyright (c) 2004-2008 João Abecasis
+#
+#   Distributed under the Boost Software License, Version 1.0. (See
+#   accompanying file LICENSE_1_0.txt or copy at
+#   http://www.boost.org/LICENSE_1_0.txt)
+#
+
+path-constant top : . ;
+
+import modules ;
+import path ;
+
+local boost-root = [ modules.peek : BOOST_ROOT ] ;
+local breeze-root = [ modules.peek : BREEZE_ROOT ] ;
+local oak-leaf-header-include = $(top) ;
+
+if ! $(breeze-root)
+{
+    ECHO "Warning: couldn't find BREEZE_ROOT." ;
+}
+
+if ! $(boost-root)
+{
+    local boost-search-dirs = [ modules.peek : BOOST_BUILD_PATH ] ;
+
+    for local dir in $(boost-search-dirs)
+    {
+        if [ path.glob $(dir)/../../../ : boost/version.hpp ]
+        {
+            boost-root += $(dir)/../../../ ;
+        }
+    }
+
+    if $(boost-root)
+    {
+        boost-root = [ path.make $(boost-root[1]) ] ;
+    }
+    else
+    {
+        ECHO "Warning: couldn't find BOOST_ROOT in" $(boost-root) ;
+    }
+}
+
+project oak-leaf
+    : requirements
+        <include>$(oak-leaf-header-include)
+        <include>$(breeze-root)
+        <include>$(boost-root)
+    : build-dir $(top)/build
+    ;
+
