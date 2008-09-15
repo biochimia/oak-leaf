@@ -54,7 +54,7 @@ namespace oak_leaf { namespace binary_search {
             return binary_tree::root();
         }
 
-    private:
+    protected:
         typedef oak_leaf::binary::tree<T, Node, Alloc> binary_tree;
 
         using binary_tree::root;

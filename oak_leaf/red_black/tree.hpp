@@ -26,9 +26,12 @@ namespace oak_leaf { namespace red_black {
     struct tree
         : oak_leaf::binary_search::tree<T, Node, Alloc>
     {
+    protected:
         typedef oak_leaf::binary_search::tree<T, Node, Alloc>
             binary_search_tree;
+        typedef typename binary_search_tree::binary_tree binary_tree;
 
+    public:
         template <class U>
         std::pair<bool, typename tree::const_pointer> insert(U const & value)
         {
