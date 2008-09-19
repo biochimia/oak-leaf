@@ -63,6 +63,32 @@ namespace oak_leaf { namespace binary {
         return tree.right;
     }
 
+    // Anti-clockwise rotation of node
+    template <class NodePointer>
+    inline void rotate_left(NodePointer & node)
+    {
+        NodePointer   n  = node;
+        NodePointer & r  = right(*n);
+        NodePointer & rl = left(*r);
+
+        node = r;
+        r    = rl;
+        rl   = n;
+    }
+
+    // Clockwise rotation of node
+    template <class NodePointer>
+    inline void rotate_right(NodePointer & node)
+    {
+        NodePointer   n  = node;
+        NodePointer & l  = left(*n);
+        NodePointer & lr = right(*r);
+
+        node = l;
+        l    = lr;
+        lr   = n;
+    }
+
 }} // namespace oak_leaf::binary
 
 #endif // include guard
